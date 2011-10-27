@@ -171,6 +171,7 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
 
         pname    = get(this, 'propertyName'),
         cr, recordType;
+    this._registerNestedRecords(recs, idx);
     newRecs = this._processRecordsToHashes(recs);
     children.replace(idx, amt, newRecs);
     // notify that the record did change...
@@ -198,6 +199,30 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
     });
 
     return recs;
+  },
+
+  /** @private
+
+    Registers existing records added via replace with the parent record.
+
+    @param {SC.Array} recs records to register with the parent record.
+    @param {Number} start starting index in the cached _records array.
+    @returns {SC.ChildArray} itself.
+  */
+  _registerNestedRecords: function(recs, start) {
+    var store, idx, that = this,
+      record = get(this, 'record'),
+      pname = get(this, 'propertyName');
+    if (!this._records) this._records = []; // create cache
+    recs = recs || [];
+    recs.forEach( function(me, i) {
+      idx = i + start;
+      if (me instanceof SC.Record) {
+        that._records[idx] = record.registerNestedRecord(me, pname, pname+'.'+idx);
+      }
+    });
+
+    return this;
   },
 
   /**
