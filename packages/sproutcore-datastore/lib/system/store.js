@@ -1087,6 +1087,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     attrs.storeKey = storeKey ;
     attrs.store    = this ;
     ret = records[storeKey] = recordType.create(attrs);
+    if (ret) ret.materializeNestedRecords();
 
     return ret ;
   },
@@ -2184,6 +2185,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     // Force record to refresh its cached properties based on store key
     var record = this.materializeRecord(storeKey);
     if (!none(record)) {
+      record.materializeNestedRecords();
       record.notifyPropertyChange('status');
     }
     //update callbacks
