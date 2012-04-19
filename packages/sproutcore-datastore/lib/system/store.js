@@ -687,6 +687,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     this.changelog = null ;
     this.recordErrors = null;
     this.queryErrors = null;
+    this._scst_recordArraysByQuery = {};
 
     var records = this.records, storeKey;
     if (records) {
