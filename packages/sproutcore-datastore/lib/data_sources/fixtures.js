@@ -339,7 +339,7 @@ SC.FixturesDataSource = SC.DataSource.extend(
     // need to load fixtures.
     var dataHashes = recordType ? recordType.FIXTURES : null,
         len        = dataHashes ? dataHashes.length : 0,
-        primaryKey = recordType ? get(recordType, 'proto').primaryKey:'guid',
+        primaryKey = recordType ? recordType.proto().primaryKey:'guid',
         idx, dataHash, id ;
 
     this._fixtures[SC.guidFor(recordType)] = fixtures = {} ;

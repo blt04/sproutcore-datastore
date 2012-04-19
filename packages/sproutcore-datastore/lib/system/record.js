@@ -969,12 +969,12 @@ SC.Record = SC.Object.extend(
     SC.run(this, function() {
       hash = hash || {}; // init if needed
 
-      existingId = hash[get(recordType, 'proto').primaryKey];
+      existingId = hash[recordType.proto().primaryKey];
 
       store = get(this, 'store');
       if (SC.none(store)) throw 'Error: during the creation of a child record: NO STORE ON PARENT!';
 
-      if (!id && (pk = get(recordType, 'proto').primaryKey)) {
+      if (!id && (pk = recordType.proto().primaryKey)) {
         id = hash[pk];
         // In case there isnt a primary key supplied then we create on
         // on the fly

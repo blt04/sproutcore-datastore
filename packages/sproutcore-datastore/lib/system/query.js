@@ -1512,6 +1512,6 @@ SC.Query.registerComparison = function(propertyName, comparison) {
   @returns {SC.Query} receiver
 */
 SC.Query.registerQueryExtension = function(tokenName, token) {
-  get(SC.Query, 'proto').queryLanguage[tokenName] = token;
+  SC.Query.proto().queryLanguage[tokenName] = token;
 };
 

@@ -9,7 +9,7 @@ require('sproutcore-datastore/system/record');
 require('sproutcore-datastore/attributes/record_attribute');
 
 var get = SC.get, set = SC.set;
-var RecordAttribute_call = get(SC.RecordAttribute, 'proto').call;
+var RecordAttribute_call = SC.RecordAttribute.proto().call;
 var attrFor = SC.RecordAttribute.attrFor;
 
 /** @class

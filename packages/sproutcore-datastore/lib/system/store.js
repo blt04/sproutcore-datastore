@@ -1118,11 +1118,11 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
 
     // First, try to get an id.  If no id is passed, look it up in the
     // dataHash.
-    if (!id && (primaryKey = get(recordType, 'proto').primaryKey)) {
+    if (!id && (primaryKey = recordType.proto().primaryKey)) {
       id = dataHash[primaryKey];
       // if still no id, check if there is a defaultValue function for
       // the primaryKey attribute and assign that
-      attr = SC.RecordAttribute.attrFor(get(recordType, 'proto'), primaryKey);
+      attr = SC.RecordAttribute.attrFor(recordType.proto(), primaryKey);
       defaultVal = attr && get(attr, 'defaultValue');
       if(!id && SC.typeOf(defaultVal)==='function') {
         id = dataHash[primaryKey] = defaultVal();
@@ -2000,7 +2000,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
 
     // save lookup info
     recordType = recordType || SC.Record;
-    primaryKey = get(recordType, 'proto').primaryKey;
+    primaryKey = recordType.proto().primaryKey;
 
 
     // push each record
@@ -2050,7 +2050,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     // save lookup info
     if (!isArray) {
       recordType = recordTypes || SC.Record;
-      primaryKey = get(recordType, 'proto').primaryKey ;
+      primaryKey = recordType.proto().primaryKey ;
     }
 
     // push each record
@@ -2058,7 +2058,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
       dataHash = dataHashes.objectAt(idx);
       if (isArray) {
         recordType = recordTypes.objectAt(idx) || SC.Record;
-        primaryKey = get(recordType, 'proto').primaryKey ;
+        primaryKey = recordType.proto().primaryKey ;
       }
       id = (ids) ? ids.objectAt(idx) : dataHash[primaryKey];
       ret[idx] = this.loadRecord(recordType, dataHash, id);
