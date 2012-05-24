@@ -72,7 +72,7 @@ SC.ManyArray = SC.Object.extend(SC.Enumerable, SC.MutableEnumerable, SC.MutableA
   */
   store: function() {
     return get(get(this, 'record'), 'store');
-  }.property('record').cacheable(),
+  }.property('record'),
 
   /**
     The `storeKey` for the parent record of this many array.  Editing this
@@ -83,7 +83,7 @@ SC.ManyArray = SC.Object.extend(SC.Enumerable, SC.MutableEnumerable, SC.MutableA
   */
   storeKey: function() {
     return get(get(this, 'record'), 'storeKey');
-  }.property('record').cacheable(),
+  }.property('record'),
 
 
   /**
@@ -95,7 +95,7 @@ SC.ManyArray = SC.Object.extend(SC.Enumerable, SC.MutableEnumerable, SC.MutableA
   */
   readOnlyStoreIds: function() {
     return get(this, 'record').readAttribute(get(this, 'propertyName'));
-  }.property(),
+  }.property().volatile(),
 
 
   /**
@@ -119,7 +119,7 @@ SC.ManyArray = SC.Object.extend(SC.Enumerable, SC.MutableEnumerable, SC.MutableA
 
     if (ret !== this._prevStoreIds) this.recordPropertyDidChange();
     return ret ;
-  }.property(),
+  }.property().volatile(),
 
 
   // ..........................................................
@@ -136,7 +136,7 @@ SC.ManyArray = SC.Object.extend(SC.Enumerable, SC.MutableEnumerable, SC.MutableA
     // NOTE: can't use get() b/c manyAttribute looks like a computed prop
     var attr = this.manyAttribute;
     return attr ? get(attr, 'isEditable') : NO;
-  }.property('manyAttribute').cacheable(),
+  }.property('manyAttribute'),
 
   /**
     Computed from owner many attribute
@@ -148,7 +148,7 @@ SC.ManyArray = SC.Object.extend(SC.Enumerable, SC.MutableEnumerable, SC.MutableA
     // NOTE: can't use get() b/c manyAttribute looks like a computed prop
     var attr = this.manyAttribute;
     return attr ? get(attr, 'inverse') : null;
-  }.property('manyAttribute').cacheable(),
+  }.property('manyAttribute'),
 
   /**
     Computed from owner many attribute
@@ -160,7 +160,7 @@ SC.ManyArray = SC.Object.extend(SC.Enumerable, SC.MutableEnumerable, SC.MutableA
     // NOTE: can't use get() b/c manyAttribute looks like a computed prop
     var attr = this.manyAttribute;
     return attr ? get(attr, 'isMaster') : null;
-  }.property("manyAttribute").cacheable(),
+  }.property("manyAttribute"),
 
   /**
     Computed from owner many attribute
@@ -172,7 +172,7 @@ SC.ManyArray = SC.Object.extend(SC.Enumerable, SC.MutableEnumerable, SC.MutableA
     // NOTE: can't use get() b/c manyAttribute looks like a computed prop
     var attr = this.manyAttribute;
     return attr ? get(attr, 'orderBy') : null;
-  }.property("manyAttribute").cacheable(),
+  }.property("manyAttribute"),
 
   // ..........................................................
   // ARRAY PRIMITIVES
@@ -187,7 +187,7 @@ SC.ManyArray = SC.Object.extend(SC.Enumerable, SC.MutableEnumerable, SC.MutableA
   length: function() {
     var storeIds = get(this, 'readOnlyStoreIds');
     return storeIds ? get(storeIds, 'length') : 0;
-  }.property('readOnlyStoreIds'),
+  }.property('readOnlyStoreIds').volatile(),
 
   /** @private
     Looks up the store id in the store ids array and materializes a

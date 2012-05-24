@@ -219,7 +219,7 @@ SC.Query = SC.Object.extend(SC.Copyable, SC.Freezable,
     q.add(this);
 
     return ret.freeze() ;
-  }.property('recordType', 'recordTypes').cacheable(),
+  }.property('recordType', 'recordTypes'),
 
   /** @private
     expands a single record type into the set. called recursively
@@ -290,7 +290,7 @@ SC.Query = SC.Object.extend(SC.Copyable, SC.Freezable,
   */
   isRemote: function() {
     return get(this, 'location') === SC.Query.REMOTE;
-  }.property('location').cacheable(),
+  }.property('location'),
 
   /**
     Returns `YES` if query location is Local.  This is sometimes more
@@ -301,7 +301,7 @@ SC.Query = SC.Object.extend(SC.Copyable, SC.Freezable,
   */
   isLocal: function() {
     return get(this, 'location') === SC.Query.LOCAL;
-  }.property('location').cacheable(),
+  }.property('location'),
 
   /**
     Indicates whether a record is editable or not.  Defaults to `NO`.  Local

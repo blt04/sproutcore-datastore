@@ -91,7 +91,7 @@ SC.Record = SC.Object.extend(
     } else {
       return SC.Store.idFor(get(this, 'storeKey'));
     }
-  }.property('storeKey').cacheable(),
+  }.property('storeKey'),
 
   /**
     All records generally have a life cycle as they are created or loaded into
@@ -113,7 +113,7 @@ SC.Record = SC.Object.extend(
   */
   status: function() {
     return this.store.readStatus(get(this, 'storeKey'));
-  }.property('storeKey').cacheable(),
+  }.property('storeKey'),
 
   /**
     The store that owns this record.  All changes will be buffered into this
@@ -148,7 +148,7 @@ SC.Record = SC.Object.extend(
   */
   isDestroyed: function() {
     return !!(get(this, 'status') & SC.Record.DESTROYED);
-  }.property('status').cacheable(),
+  }.property('status'),
 
   /**
     `YES` when the record is in an editable state.  You can use this property 
@@ -166,7 +166,7 @@ SC.Record = SC.Object.extend(
   isEditable: function(key, value) {
     if (value !== undefined) this._screc_isEditable = value;
     return (get(this, 'status') & SC.Record.READY) && this._screc_isEditable;
-  }.property('status').cacheable(),
+  }.property('status'),
 
   /**
     @private
@@ -186,7 +186,7 @@ SC.Record = SC.Object.extend(
   isLoaded: function() {
     var status = get(this, 'status');
     return !((status===K.EMPTY) || (status===K.BUSY_LOADING) || (status===K.ERROR));
-  }.property('status').cacheable(),
+  }.property('status'),
 
   /**
     If set, this should be an array of active relationship objects that need
@@ -210,7 +210,7 @@ SC.Record = SC.Object.extend(
   **/
   attributes: function() {
     return get(this, 'store').readEditableDataHash(get(this, 'storeKey'));
-  }.property(),
+  }.property().volatile(),
 
   /**
     This will return the raw attributes that you cannot edit directly.  It is
@@ -224,7 +224,7 @@ SC.Record = SC.Object.extend(
   readOnlyAttributes: function() {
     var ret = get(this, 'store').readDataHash(get(this, 'storeKey'));
     return ret ? copy(ret) : null;
-  }.property(),
+  }.property().volatile(),
 
   /**
     The namespace which to retrieve the childRecord Types from
@@ -243,7 +243,7 @@ SC.Record = SC.Object.extend(
   isNestedRecord: function(){
     var store = get(this, 'store'), sk = get(this, 'storeKey');
     return !!store.parentStoreKeyExists(sk);
-  }.property('storeKey').cacheable(),
+  }.property('storeKey'),
 
   /**
     The parent record if this is a nested record.
@@ -254,7 +254,7 @@ SC.Record = SC.Object.extend(
   parentRecord: function(){
     var sk = get(this, 'storeKey'), store = get(this, 'store');
     return store.materializeParentRecord(sk);
-  }.property('storeKey').cacheable(),
+  }.property('storeKey'),
 
   // ...............................
   // CRUD OPERATIONS
@@ -750,7 +750,7 @@ SC.Record = SC.Object.extend(
   */
   isError: function() {
     return get(this, 'status') & SC.Record.ERROR;
-  }.property('status').cacheable(),
+  }.property('status'),
 
   /**
     Returns the receiver if the record is in an error state.  Returns null
@@ -762,7 +762,7 @@ SC.Record = SC.Object.extend(
   */
   errorValue: function() {
     return get(this, 'isError') ? SC.val(get(this, 'errorObject')) : null ;
-  }.property('isError').cacheable(),
+  }.property('isError'),
 
   /**
     Returns the current error object only if the record is in an error state.
@@ -777,7 +777,7 @@ SC.Record = SC.Object.extend(
       var store = get(this, 'store');
       return store.readError(get(this, 'storeKey')) || K.GENERIC_ERROR;
     } else return null ;
-  }.property('isError').cacheable(),
+  }.property('isError'),
 
   // ...............................
   // PRIVATE

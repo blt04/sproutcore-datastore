@@ -36,12 +36,12 @@ module("Cyclical relationships", {
           record: this
         });  
         return get(this, 'store').find(q);
-      }.property().cacheable(),
+      }.property(),
       
       // discover favorite contacts only
       favoriteContacts: function() {
         return get(this, 'contacts').filterProperty('isFavorite', YES);
-      }.property('contacts.[]').cacheable()
+      }.property('contacts.[]')
       
     });
     

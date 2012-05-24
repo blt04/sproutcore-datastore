@@ -139,7 +139,7 @@ SC.IndexSet = SC.Object.extend(SC.Enumerable, SC.MutableEnumerable, SC.Freezable
         cur = content[0];
     return (cur === 0) ? -1 : (cur>0) ? 0 : abs(cur);
 
-  }.property('[]').cacheable(),
+  }.property('[]'),
 
   /**
     When you create a new index set you can optional pass another index set

@@ -155,7 +155,7 @@ SC.RecordAttribute = SC.Object.extend(
     var ret = get(this, 'type');
     if (SC.typeOf(ret) === 'string') ret = getPath(ret);
     return ret ;
-  }.property('type').cacheable(),
+  }.property('type'),
 
   /**
     Finds the transform handler. Attempts to find a transform that you
@@ -182,7 +182,7 @@ SC.RecordAttribute = SC.Object.extend(
     }
 
     return ret ;
-  }.property('typeClass').cacheable(),
+  }.property('typeClass'),
 
   // ..........................................................
   // LOW-LEVEL METHODS

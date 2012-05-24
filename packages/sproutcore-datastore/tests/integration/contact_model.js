@@ -110,7 +110,7 @@ module("Sample Model from an address book app", {
           groups.invoke('notifyPropertyChange', 'contacts');
         }
         return get(this, 'store').records(this.readAttribute('groups'));
-      }.property().cacheable()
+      }.property()
       
     });
     

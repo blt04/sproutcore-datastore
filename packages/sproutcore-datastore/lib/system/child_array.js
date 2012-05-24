@@ -63,7 +63,7 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
   */
   store: function() {
     return getPath(this, 'record.store');
-  }.property('record').cacheable(),
+  }.property('record'),
 
   /**
     The storeKey for the parent record of this many array.  Editing this
@@ -74,7 +74,7 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
   */
   storeKey: function() {
     return getPath(this, 'record.storeKey');
-  }.property('record').cacheable(),
+  }.property('record'),
 
   /**
     Returns the storeIds in read only mode.  Avoids modifying the record
@@ -85,7 +85,7 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
   */
   readOnlyChildren: function() {
     return get(this, 'record').readAttribute(get(this, 'propertyName'));
-  }.property(),
+  }.property().volatile(),
 
   /**
     Returns an editable array of child hashes.  Marks the owner records as
@@ -108,7 +108,7 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
 
     if (ret !== this._prevChildren) this.recordPropertyDidChange();
     return ret ;
-  }.property(),
+  }.property().volatile(),
 
   // ..........................................................
   // ARRAY PRIMITIVES
@@ -123,7 +123,7 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
   length: function() {
     var children = get(this, 'readOnlyChildren');
     return children ? children.length : 0;
-  }.property('readOnlyChildren'),
+  }.property('readOnlyChildren').volatile(),
 
   /**
     Looks up the store id in the store ids array and materializes a

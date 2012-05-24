@@ -73,7 +73,7 @@ SC.StoreError = SC.Object.extend(
   */
   errorObject: function() {
     return this;
-  }.property().cacheable(),
+  }.property(),
 
   /**
     Human readable name of the item with the error.

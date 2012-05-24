@@ -109,7 +109,7 @@ SC.RecordArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable,
   isEditable: function() {
     var query = get(this, 'query');
     return query ? get(query, 'isEditable') : YES;
-  }.property('query').cacheable(),
+  }.property('query'),
 
   // ..........................................................
   // ARRAY PRIMITIVES
@@ -123,7 +123,7 @@ SC.RecordArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable,
     this.flush(); // cleanup pending changes
     var storeKeys = get(this, 'storeKeys');
     return storeKeys ? get(storeKeys, 'length') : 0;
-  }.property('storeKeys').cacheable(),
+  }.property('storeKeys'),
 
   /** @private
     A cache of materialized records. The first time an instance of SC.Record is
@@ -642,7 +642,7 @@ SC.RecordArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable,
   */
   isError: function() {
     return get(this, 'status') & SC.Record.ERROR;
-  }.property('status').cacheable(),
+  }.property('status'),
 
   /**
     Returns the receiver if the record array is in an error state.  Returns
@@ -653,7 +653,7 @@ SC.RecordArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable,
   */
   errorValue: function() {
     return get(this, 'isError') ? SC.val(get(this, 'errorObject')) : null ;
-  }.property('isError').cacheable(),
+  }.property('isError'),
 
   /**
     Returns the current error object only if the record array is in an error
@@ -668,7 +668,7 @@ SC.RecordArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable,
       var store = get(this, 'store');
       return store.readQueryError(get(this, 'query')) || SC.Record.GENERIC_ERROR;
     } else return null ;
-  }.property('isError').cacheable(),
+  }.property('isError'),
 
   // ..........................................................
   // INTERNAL SUPPORT
