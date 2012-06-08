@@ -10,7 +10,7 @@ require('sproutcore-datastore/system/store');
 
 var get = SC.get, set = SC.set;
 
-var o_create = SC.platform.create;
+var o_create = SC.create;
 
 /**
   @class
