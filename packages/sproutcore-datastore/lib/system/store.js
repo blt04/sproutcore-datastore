@@ -862,7 +862,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     @param {String} id the id to load
     @returns {SC.Record} record instance or null
   */
-  find: function(recordType, id) {
+  find: function(recordType, id, fetchParams) {
 
     // if recordType is passed as string, find object
     if ('string' === typeof recordType) {
@@ -882,7 +882,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
 
     // handle finding a single record
     } else {
-      return this._findRecord(recordType, id);
+      return this._findRecord(recordType, id, fetchParams);
     }
   },
 
@@ -934,7 +934,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     return ret ;
   },
 
-  _findRecord: function(recordType, id) {
+  _findRecord: function(recordType, id, fetchParams) {
 
     var storeKey ;
 
@@ -949,7 +949,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     } else storeKey = id ? recordType.storeKeyFor(id) : null;
 
     if (storeKey && (this.readStatus(storeKey) === SC.Record.EMPTY)) {
-      storeKey = this.retrieveRecord(recordType, id);
+      storeKey = this.retrieveRecord(recordType, id, undefined, undefined, undefined, fetchParams);
     }
 
     // now we have the storeKey, materialize the record and return it.
@@ -1559,7 +1559,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     @param {Function|Array} callback function or array of functions
     @returns {Array} storeKeys to be retrieved
   */
-  retrieveRecords: function(recordTypes, ids, storeKeys, isRefresh, callbacks) {
+  retrieveRecords: function(recordTypes, ids, storeKeys, isRefresh, callbacks, fetchParams) {
 
     var source  = this._getDataSource(),
         isArray = SC.typeOf(recordTypes) === 'array',
@@ -1618,7 +1618,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     // now retrieve storekeys from dataSource.  if there is no dataSource,
     // then act as if we couldn't retrieve.
     ok = NO;
-    if (source) ok = source.retrieveRecords.call(source, this, ret, ids);
+    if (source) ok = source.retrieveRecords.call(source, this, ret, ids, fetchParams);
 
     // if the data source could not retrieve or if there is no source, then
     // simulate the data source calling dataSourceDidError on those we are
@@ -1718,7 +1718,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     @param {Function} callback (optional)
     @returns {Number} storeKey that was retrieved
   */
-  retrieveRecord: function(recordType, id, storeKey, isRefresh, callback) {
+  retrieveRecord: function(recordType, id, storeKey, isRefresh, callback, fetchParams) {
     var array = this._TMP_RETRIEVE_ARRAY,
         ret;
 
@@ -1730,8 +1730,9 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
       array[0] = id;
       id = array;
     }
+    fetchParams = [fetchParams];
 
-    ret = this.retrieveRecords(recordType, id, storeKey, isRefresh, callback);
+    ret = this.retrieveRecords(recordType, id, storeKey, isRefresh, callback, fetchParams);
     array.length = 0 ;
     return ret[0];
   },
@@ -1747,8 +1748,8 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
     @param {Function} callback (optional) when refresh complets
     @returns {Boolean} YES if the retrieval was a success.
   */
-  refreshRecord: function(recordType, id, storeKey, callback) {
-    return !!this.retrieveRecord(recordType, id, storeKey, YES, callback);
+  refreshRecord: function(recordType, id, storeKey, callback, params) {
+    return !!this.retrieveRecord(recordType, id, storeKey, YES, callback, params);
   },
 
   /**
