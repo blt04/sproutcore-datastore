@@ -1503,6 +1503,9 @@ SC.Record.reopenClass( /** @scope SC.Record.prototype */ {
   extend: function() {
     var ret = SC.Object.extend.apply(this, arguments);
 
+    ret.subclasses = Ember.Set ? new Ember.Set() : null
+    if (this.subclasses) { this.subclasses.add(ret); }
+
     // Clear aggregates cache when creating a new subclass
     // of SC.Record
     ret.aggregates = null;
