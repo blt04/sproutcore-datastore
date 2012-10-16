@@ -10,7 +10,7 @@ require('sproutcore-datastore/data_sources/data_source');
 require('sproutcore-datastore/system/record');
 require('sproutcore-datastore/system/store_error');
 
-var get = SC.get, set = SC.set, getPath = SC.getPath;
+var get = SC.get, set = SC.set;
 
 /** @class
 
@@ -99,7 +99,7 @@ SC.FixturesDataSource = SC.DataSource.extend(
     // load fixtures for each recordType
     recordTypes.forEach(function(recordType) {
       if (SC.typeOf(recordType) === 'string') {
-        recordType = getPath(recordType);
+        recordType = get(recordType);
       }
 
       if (recordType) this.loadFixturesFor(store, recordType);

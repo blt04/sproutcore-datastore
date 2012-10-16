@@ -310,7 +310,7 @@ SC.NestedStore = SC.Store.extend(
         pr = this.parentRecords[pk];
         if (pr) {
           path = pr[storeKey];
-          this.dataHashes[storeKey] = path ? SC.getPath(this.dataHashes[pk], path) : null;
+          this.dataHashes[storeKey] = path ? SC.get(this.dataHashes[pk], path) : null;
         }
       }
       else {

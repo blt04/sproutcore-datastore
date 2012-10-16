@@ -9,7 +9,7 @@ require('sproutcore-runtime');
 require('sproutcore-datastore/system/record');
 require('sproutcore-datetime');
 
-var get = SC.get, set = SC.set, getPath = SC.getPath;
+var get = SC.get, set = SC.set;
 
 /** @class
 
@@ -153,7 +153,7 @@ SC.RecordAttribute = SC.Object.extend(
   */
   typeClass: function() {
     var ret = get(this, 'type');
-    if (SC.typeOf(ret) === 'string') ret = getPath(ret);
+    if (SC.typeOf(ret) === 'string') ret = get(ret);
     return ret ;
   }.property('type'),
 

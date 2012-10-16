@@ -5,7 +5,7 @@
 // License:   Licensed under MIT license (see license.js)
 // ==========================================================================
 
-var get = SC.get, set = SC.set, getPath = SC.getPath;
+var get = SC.get, set = SC.set;
 
 /**
   @class
@@ -62,7 +62,7 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
     @property
   */
   store: function() {
-    return getPath(this, 'record.store');
+    return get(this, 'record.store');
   }.property('record'),
 
   /**
@@ -73,7 +73,7 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
     @property
   */
   storeKey: function() {
-    return getPath(this, 'record.storeKey');
+    return get(this, 'record.storeKey');
   }.property('record'),
 
   /**

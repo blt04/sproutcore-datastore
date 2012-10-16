@@ -173,9 +173,9 @@ test("reading date should parse ISO date", function() {
 
 test("reading dateTime should parse ISO date", function() {
   var ms = 1235939425000;
-  equals(SC.getPath(rec, 'dateTime.milliseconds'), ms, 'should have parsed Date properly');
-  equals(SC.getPath(rec2, 'dateTime.milliseconds'), ms, 'should have parsed String properly');
-  equals(SC.getPath(rec3, 'dateTime.milliseconds'), ms, 'should have parsed SC.DateTime properly');
+  equals(SC.get(rec, 'dateTime.milliseconds'), ms, 'should have parsed Date properly');
+  equals(SC.get(rec2, 'dateTime.milliseconds'), ms, 'should have parsed String properly');
+  equals(SC.get(rec3, 'dateTime.milliseconds'), ms, 'should have parsed SC.DateTime properly');
 });
 
 test("reading date should parse non-ISO date", function() {

@@ -11,7 +11,7 @@ require('sproutcore-datastore/system/nested_store');
 require('sproutcore-datastore/system/query');
 require('sproutcore-datastore/system/record_array');
 
-var get = SC.get, set = SC.set, getPath = SC.getPath, none = SC.none;
+var get = SC.get, set = SC.set, none = SC.none;
 
 /**
   @class
@@ -99,7 +99,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
   _getDataSource: function() {
     var ret = get(this, 'dataSource');
     if (typeof ret === 'string') {
-      ret = getPath( ret);
+      ret = get( ret);
       if (ret && ret.isClass) ret = ret.create();
       if (ret) set(this, 'dataSource', ret);
     }
@@ -344,7 +344,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
         pr = this.parentRecords[pk];
         if (pr) {
           path = pr[storeKey];
-          ret = this.dataHashes[storeKey] = path ? SC.getPath(this.dataHashes[pk], path) : null;
+          ret = this.dataHashes[storeKey] = path ? SC.get(this.dataHashes[pk], path) : null;
         }
       }
       else {
@@ -866,7 +866,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
 
     // if recordType is passed as string, find object
     if ('string' === typeof recordType) {
-      recordType = getPath(recordType);
+      recordType = get(recordType);
     }
 
     // handle passing a query...

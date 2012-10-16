@@ -44,7 +44,7 @@ test("should handle record types", function() {
   
   q.conditions = "TYPE_IS 'MyApp.Foo'";
   q.parse();
-  equals(SC.Store.recordTypeFor(rec.storeKey), SC.getPath('MyApp.Foo'), 'record type should be MyApp.Foo');
+  equals(SC.Store.recordTypeFor(rec.storeKey), SC.get('MyApp.Foo'), 'record type should be MyApp.Foo');
   ok(q.contains(rec), 'record with proper type should match');
   
   q.conditions = "TYPE_IS 'MyApp.Baz'";

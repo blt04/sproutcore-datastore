@@ -110,10 +110,10 @@ function() {
 
 test("Function: readAttribute() in the Parent > Child > Child",
 function() {
-  var address = SC.getPath(testParent,  'person.address');
-  ok(address, "check to see if the child of the child in the chain exists with a getPath()");
-  equals(address.readAttribute('street'), '123 Sesame St', "child readAttribute should be correct for street attribute w/ getPath()");
-  equals(address.readAttribute('nothing'), null, "child readAttribute should be correct for invalid key w/ getPath()");
+  var address = SC.get(testParent,  'person.address');
+  ok(address, "check to see if the child of the child in the chain exists with a get()");
+  equals(address.readAttribute('street'), '123 Sesame St', "child readAttribute should be correct for street attribute w/ get()");
+  equals(address.readAttribute('nothing'), null, "child readAttribute should be correct for invalid key w/ get()");
   
   // Test the individual gets
   var person = get(testParent, 'person');
@@ -190,7 +190,7 @@ function() {
 
 test("Function: writeAttribute() in the Parent > Child > Child",
 function() {  
-  var address = SC.getPath(testParent,  'person.address');
+  var address = SC.get(testParent,  'person.address');
   address.writeAttribute('street', '1 Death Star Lane');
   equals(address.readAttribute('street'), '1 Death Star Lane', "writeAttribute should be the new name attribute on the child.street");
   // Now, test the person
@@ -222,10 +222,10 @@ function() {
   equals(p, storeRef, "checking the parent reference is the same as the direct store reference");
   same(get(storeRef, 'attributes'), testParent.readAttribute('person'), "check that the ChildRecord's attributes are the same as the parent.person's readAttribute for the reference");
   
-  var a = SC.getPath(testParent,  'person.address');
+  var a = SC.get(testParent,  'person.address');
   // Check Model Class information
-  ok((a instanceof  SC.Record), "(parent > child > child) w/ getPath() creates an actual instance that is a kind of a SC.Record Object");
-  ok((a instanceof NestedRecord.Address), "(parent > child > child) w/ getPath() creates an actual instance of an Address Object");
+  ok((a instanceof  SC.Record), "(parent > child > child) w/ get() creates an actual instance that is a kind of a SC.Record Object");
+  ok((a instanceof NestedRecord.Address), "(parent > child > child) w/ get() creates an actual instance of an Address Object");
   
   // Check reference information
   var aKey = get(a, pm);
@@ -282,7 +282,7 @@ function() {
   same(testParent.readAttribute('person'), get(p, 'attributes'), "after a set('name', <new>) on child, readAttribute on the parent should be correct for info child attributes");
   
   // Check changes on the address
-  a = SC.getPath(testParent,  'person.address');
+  a = SC.get(testParent,  'person.address');
   set(a, 'street', '321 Nutty Professor Lane');
   parentAttrs = testParent.readAttribute('person');
   same(get(a, 'attributes'), parentAttrs.address, "after a set('street', <new>) on address child, checking to see that the parent has recieved the changes from the child record");

@@ -8,7 +8,7 @@
 require('sproutcore-runtime');
 require('sproutcore-datastore/system/record');
 
-var get = SC.get, set = SC.set, getPath = SC.getPath;
+var get = SC.get, set = SC.set;
 
 /**
   @class
@@ -229,7 +229,7 @@ SC.Query = SC.Object.extend(SC.Copyable, SC.Freezable,
     set.add(recordType);
 
     if (SC.typeOf(recordType)==='string') {
-      recordType = getPath( recordType);
+      recordType = get( recordType);
     }
 
     recordType.subclasses.forEach(function(t) {
@@ -537,7 +537,7 @@ SC.Query = SC.Object.extend(SC.Copyable, SC.Freezable,
 
       /** @ignore */
       evaluate:         function (r,w) {
-                          return SC.getPath(r, this.tokenValue);
+                          return SC.get(r, this.tokenValue);
                         }
     },
 
@@ -811,7 +811,7 @@ SC.Query = SC.Object.extend(SC.Copyable, SC.Freezable,
       evaluate:         function (r,w) {
                           var actualType = SC.Store.recordTypeFor(r.storeKey);
                           var right      = this.rightSide.evaluate(r,w);
-                          var expectType = getPath( right);
+                          var expectType = get( right);
                           return actualType == expectType;
                         }
     },
@@ -1367,13 +1367,13 @@ SC.Query.reopenClass( /** @scope SC.Query */ {
 
     // normalize recordType
     if (typeof recordType === 'string') {
-      ret = getPath( recordType);
+      ret = get( recordType);
       if (!ret) throw "%@ did not resolve to a class".fmt(recordType);
       recordType = ret ;
     } else if (recordType && recordType.isEnumerable) {
       ret = [];
       recordType.forEach(function(t) {
-        if (typeof t === 'string') t = getPath( t);
+        if (typeof t === 'string') t = get( t);
         if (!t) throw "cannot resolve record types: %@".fmt(recordType);
         ret.push(t);
       }, this);
