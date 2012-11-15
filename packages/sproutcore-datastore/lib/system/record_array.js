@@ -686,6 +686,28 @@ SC.RecordArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable,
   },
 
   /** @private
+    Invoked whenever the `storeKeys` array is about to change.
+  */
+  _storeKeysWillChange: function() {
+    var prev = get(this, 'storeKeys');
+
+    var oldLen,
+        f    = this._storeKeysContentDidChange,
+        fs   = this._storeKeysStateDidChange;
+
+    oldLen = prev ? get(prev, 'length') : 0;
+
+    this._storeKeysContentWillChange(prev, 0, oldLen, 0);
+
+    if (prev) {
+      prev.removeArrayObserver(this, {
+        willChange: this._storeKeysContentWillChange,
+        didChange: this._storeKeysContentDidChange
+      });
+    }
+  }.observesBefore('storeKeys'),
+
+  /** @private
     Invoked whenever the `storeKeys` array changes.  Observes changes.
   */
   _storeKeysDidChange: function() {
@@ -695,18 +717,8 @@ SC.RecordArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable,
         f    = this._storeKeysContentDidChange,
         fs   = this._storeKeysStateDidChange;
 
-    if (storeKeys === prev) { return; } // nothing to do
     oldLen = prev ? get(prev, 'length') : 0;
     newLen = storeKeys ? get(storeKeys, 'length') : 0;
-
-    this._storeKeysContentWillChange(prev, 0, oldLen, newLen);
-
-    if (prev) {
-      prev.removeArrayObserver(this, {
-        willChange: this._storeKeysContentWillChange,
-        didChange: this._storeKeysContentDidChange
-      });
-    }
 
     this._prevStoreKeys = storeKeys;
     if (storeKeys) {
