@@ -254,7 +254,7 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
 
     if (prev) {
       prev.removeArrayObserver(this, {
-        willChange: this.arrayContentWillChange,
+        willChange: this.arrayWillChange,
         didChange: f
       });
 
@@ -263,7 +263,7 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
 
     if (children) {
       children.addArrayObserver(this, {
-        willChange: this.arrayContentWillChange,
+        willChange: this.arrayWillChange,
         didChange: f
       });
 
@@ -276,6 +276,10 @@ SC.ChildArray = SC.Object.extend(SC.Enumerable, SC.Array, SC.MutableEnumerable, 
     this._childrenContentDidChange(children, 0, oldLen, newLen);
 
     return this;
+  },
+
+  arrayWillChange: function(item, start, removedCount, addedCount) {
+    this.arrayContentWillChange(start, removedCount, addedCount);
   },
 
   /** @private
